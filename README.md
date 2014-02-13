@@ -139,7 +139,7 @@ public function actionIndex() {
 }
 ```
 	
-7.&nbsp;In `proteced/views/tree folder`, create "view" file `tree.php` and define its content:
+7.&nbsp;In `proteced/views/tree` folder, create "view" file `tree.php` and define its content:
 
 ```php
 <?php $this->widget('ext.gtreetable.EGTreeTable',array(
