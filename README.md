@@ -5,7 +5,7 @@ on the other hand it provides functionality which allows to save the nodes state
 
 See [live demo](http://gtreetable.gilek.net).
 
-![](http://gtreetable.gilek.net/assets/gtreetable.png)
+![](http://gtreetable.gilek.net/assets/gtreetable-demo.png)
 
 Requirements
 ------------
