@@ -9,9 +9,9 @@ See [live demo](http://gtreetable.gilek.net).
 
 Requirements
 ------------
-- PHP 5.2 or above
-- Yii 1.1 or above
-- Twitter Bootstrap 3
+- PHP 5.2 or above,
+- Yii 1.1 or above,
+- Twitter Bootstrap 3.
 
 Installing and configuring
 --------------------------
