@@ -5,12 +5,13 @@ on the other hand it provides functionality which allows to save the nodes state
 
 See [live demo](http://gtreetable.gilek.net).
 
-![](http://gtreetable.gilek.net/assets/gtreetable.png)
+![](http://gtreetable.gilek.net/assets/gtreetable-demo.png)
 
 Requirements
 ------------
-- PHP 5.2 or above
-- Yii 1.1 or above
+- PHP 5.2 or above,
+- Yii 1.1 or above,
+- Twitter Bootstrap 3.
 
 Installing and configuring
 --------------------------
@@ -139,7 +140,7 @@ public function actionIndex() {
 }
 ```
 	
-7.&nbsp;In `proteced/views/tree folder`, create "view" file `tree.php` and define its content:
+7.&nbsp;In `proteced/views/tree` folder, create "view" file `tree.php` and define its content:
 
 ```php
 <?php $this->widget('ext.gtreetable.EGTreeTable',array(
