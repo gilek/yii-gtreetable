@@ -18,7 +18,7 @@ class NodeChildrenAction extends CAction {
         $model = new $this->treeModelName();
         $criteria = new CDbCriteria();
         if ($root) {
-            $criteria->compare('type',Unit::TYPE_ROOT);
+            $criteria->compare('type',$model::TYPE_ROOT);
             $criteria->limit = 1;
         } else 
             $criteria->compare('id',$id);
