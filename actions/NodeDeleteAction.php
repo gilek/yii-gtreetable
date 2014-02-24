@@ -2,7 +2,7 @@
 /*
 * @author Maciej "Gilek" Kłak
 * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
-* @version 1.0a
+* @version 1.1a
 * @package Yii-GTreeTable
 */
 class NodeDeleteAction extends CAction {
@@ -28,15 +28,14 @@ class NodeDeleteAction extends CAction {
         
         $trans = $model->dbConnection->beginTransaction();
         try {        
-            foreach($nodes as $node)  {
-
+            foreach($nodes as $node) {
                 foreach((array)$this->depending as $rel=>$message) 
                     if ($node->$rel > 0)
                         throw new CHttpException(400,  str_replace ('{count}', $node->$rel, $message));           
-                
-                if (!$node->deleteNode()) 
-                    throw new CDbException(Yii::t('gtreetable','Deleting operation `{name}` failed!',array('{name}'=>CHtml::encode((string)$model))));   
             }    
+            if (!$model->deleteNode()) 
+                throw new CDbException(Yii::t('gtreetable','Deleting operation `{name}` failed!',array('{name}'=>CHtml::encode((string)$model))));               
+            
             $trans->commit();
         } catch(CException $e) {
             $trans->rollBack();

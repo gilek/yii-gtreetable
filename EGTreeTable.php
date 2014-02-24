@@ -2,7 +2,7 @@
 /*
 * @author Maciej "Gilek" Kłak
 * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
-* @version 1.0a
+* @version 1.1a
 * @package Yii-GTreeTable
 */
 class EGTreeTable extends CWidget {        
@@ -10,10 +10,10 @@ class EGTreeTable extends CWidget {
     public $htmlOptions = array();
     public $selector;   
     public $baseScriptUrl;  
-	public $columnName = 'Category';
+    public $columnName = 'Category';
     
     public function run() {
-		if($this->baseScriptUrl===null) {
+        if($this->baseScriptUrl===null) {
             $this->baseScriptUrl=Yii::app()->getAssetManager()->publish(dirname(__FILE__).DIRECTORY_SEPARATOR.'assets');
         }
 
