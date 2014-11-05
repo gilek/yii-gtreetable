@@ -68,10 +68,12 @@ $defaultOptions = array(
                 alert(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
             }
         });        
-    }"),    
+    }")
 );
 
-$options = !isset($options) ? $defaultOptions : ArrayHelper::merge($defaultOptions, $options);
+
+
+$options = !isset($options) ? $defaultOptions : array_merge($defaultOptions, $options);
     
 $widget = $this->createWidget('ext.gtreetable.EGTreeTable',array(
     'options'=> $options,

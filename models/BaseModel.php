@@ -58,10 +58,19 @@ abstract class BaseModel extends CActiveRecord
     }
     
     public function behaviors() {
+
+        $nestedSet = array(
+            'class'=>'ext.gtreetable.behaviors.nestedset.NestedSetBehavior',
+        );
+        
+        foreach (['rootAttribute', 'leftAttribute', 'rightAttribute', 'levelAttribute', 'hasManyRoots'] as $attribute) {
+            if ($this->{$attribute} !== null) {
+                $nestedSet[$attribute] = $this->{$attribute};
+            }
+        }
+
         return array(
-            'nestedSetBehavior'=>array(
-                'class'=>'ext.gtreetable.behaviors.nestedset.NestedSetBehavior',
-            ),            
+            'nestedSetBehavior' => $nestedSet
         );
     }    
     
