@@ -15,13 +15,13 @@ class NodeChildrenAction extends BaseAction
         $nodes = array();
         
         if ((integer)$id === 0) {
-            $nodes = CActiveRecord::model($this->treeModelName)->roots()->all();
+            $nodes = CActiveRecord::model($this->treeModelName)->roots()->findAll();
         } else {
             $parent = $this->getNodeById($id);
             if ($parent === null) {
                 throw new CHttpException(404, Yii::t('gtreetable', 'Position indicated by parent ID is not exists!'));
             }
-            $nodes = $parent->children()->all();
+            $nodes = $parent->children()->findAll();
         }
         $result = array();
         foreach ($nodes as $node) {
@@ -32,7 +32,7 @@ class NodeChildrenAction extends BaseAction
                 'type' => $node->type
             );
         }
-        echo Json::encode($result);
+        echo CJSON::encode($result);
     }
 }
 

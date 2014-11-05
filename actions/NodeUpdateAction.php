@@ -27,7 +27,7 @@ class NodeUpdateAction extends BaseAction
                 throw new CDbException(Yii::t('gtreetable', 'Update operation `{name}` failed!', array('{name}' => Html::encode((string) $model))));
             }
 
-            echo Json::encode(array(
+            echo CJSON::encode(array(
                 'id' => $model->getPrimaryKey(),
                 'name' => $model->name,
                 'level' => $model->level,

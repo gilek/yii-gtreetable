@@ -44,12 +44,12 @@ abstract class BaseModel extends CActiveRecord
     
     public function relations() {
         return array(
-            'relatedRel' => array(self::BELONGS_TO, get_class($this) , 'related'),
+            'relatedNode' => array(self::BELONGS_TO, get_class($this) , 'related'),
         );
     }    
     
-    public function beforeSave($insert) {
-        parent::beforeSave($insert);
+    public function beforeSave() {
+        parent::beforeSave();
 
         if ($this->isNewRecord) {
             $this->{$this->typeAttribute} = self::TYPE_DEFAULT;
@@ -81,10 +81,10 @@ abstract class BaseModel extends CActiveRecord
      */
     public function getPath($glue = ' » ') {
         $path = array();
-        foreach ($this->ancestors()->all() as $model) {
-            $path[] = (string) $model;
+        foreach($this->ancestors()->findAll() as $dc) {
+            $path[] = (string)$dc;      
         }
-        $path[] = (string) $this;
+        $path[] = (string)$this;
         krsort($path);
         return implode($glue, $path);
     }    

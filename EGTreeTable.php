@@ -1,55 +1,75 @@
 <?php
+
 /*
-* @author Maciej "Gilek" Kłak
-* @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
-* @version 1.1a
-* @package Yii-GTreeTable
-*/
-class EGTreeTable extends CWidget {        
+ * @author Maciej "Gilek" Kłak
+ * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
+ * @version 2.0.0-alpha
+ * @package yii-gtreetable
+ */
+
+class EGTreeTable extends CWidget
+{
+
     public $options = array();
     public $htmlOptions = array();
-    public $selector;   
-    public $baseScriptUrl;  
-    public $columnName = 'Category';
+    public $selector;
+    public $columnName;
+    public $baseScriptUrl;    
+    public $minSuffix;
     
-    public function run() {
-        if($this->baseScriptUrl===null) {
-            $this->baseScriptUrl=Yii::app()->getAssetManager()->publish(dirname(__FILE__).DIRECTORY_SEPARATOR.'assets');
-        }
+    /**
+     * @inheritdoc
+     */
+    public function init() {
+        $this->registerClientScript();
+        $this->minSuffix = YII_DEBUG ? '' : '.min';
+        $this->columnName = Yii::t('gtreetable', 'Name');
+    }    
+    
+    public function run()
+    {
+        if ($this->selector === null) {
+            $htmlOptions = array_merge(array(
+                'class' => 'table gtreetable',
+                'id' => $this->getId()
+            ), $this->htmlOptions);
 
-        $cs=Yii::app()->getClientScript();  
-        $cs->registerCoreScript('jquery');
-        
-        $cs->registerScriptFile($this->baseScriptUrl.'/bootstrap-gtreetable.js');        
-        $cs->registerCssFile($this->baseScriptUrl.'/gtreetable.css');
-        
-        if (array_key_exists('language', $this->options) && strlen($this->options['language']) > 0) {
-            $cs->registerScriptFile($this->baseScriptUrl.'/languages/bootstrap-gtreetable.'.$this->options['language'].'.js');              
-        }
-        
-        $selector = $this->selector;
-        if ($selector===null) {       
-            $htmlOptions = array_merge(
-                array(
-                    'class'=>'table gtreetable',
-                    'id'=>$this->getId()
-                ),
-                $this->htmlOptions
-            );
-            
-            $selector = '#'.$htmlOptions['id'];
-            echo CHtml::openTag('table', $htmlOptions);      
-            echo CHtml::openTag('thead');        
-            echo CHtml::openTag('tr');        
-            echo CHtml::openTag('th');        
+            echo CHtml::openTag('table', $htmlOptions);
+            echo CHtml::openTag('thead');
+            echo CHtml::openTag('tr');
+            echo CHtml::openTag('th');
             echo $this->columnName;
-            echo CHtml::closeTag('th');        
-            echo CHtml::closeTag('tr');        
-            echo CHtml::closeTag('thead');        
+            echo CHtml::closeTag('th');
+            echo CHtml::closeTag('tr');
+            echo CHtml::closeTag('thead');
             echo CHtml::closeTag('table');
         }
-
-        $script = 'jQuery(\''.$selector.'\').gtreetable('.CJavaScript::encode($this->options).')';
-        $cs->registerScript(uniqid(),$script.';', CClientScript::POS_READY);
     }
+    
+    public function registerClientScript() {
+        if ($this->baseScriptUrl === null) {
+            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets');
+        }
+
+        $cs = Yii::app()->getClientScript();
+        $cs->registerCoreScript('jquery');
+
+        $cs->registerScriptFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/bootstrap-gtreetable' . $this->minSuffix . '.js');
+        $cs->registerCssFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/bootstrap-gtreetable' . $this->minSuffix . '.css');
+
+        if (array_key_exists('language', $this->options) && strlen($this->options['language']) > 0) {
+            $cs->registerScriptFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/languages/bootstrap-gtreetable.' . $this->options['language'] . $this->minSuffix . '.js');
+        }
+        
+        if (array_key_exists('draggable', $this->options) && $this->options['draggable'] === true) {
+            $cs->registerCoreScript('jquery.ui'); 
+            $cs->registerScriptFile($this->baseScriptUrl . '/jquery.browser/dist/jquery.browser' . $this->minSuffix . '.js');
+        }
+        
+        $selector = $this->selector === null ? '#' . (array_key_exists('id', $this->htmlOptions) ? $this->htmlOptions['id'] : $this->getId()) : $this->selector;
+        
+        $script = 'jQuery(\'' . $selector . '\').gtreetable(' . CJavaScript::encode($this->options) . ')';
+        $cs->registerScript(uniqid(), $script . ';', CClientScript::POS_READY);        
+    }
+
 }
