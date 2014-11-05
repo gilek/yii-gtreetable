@@ -7,6 +7,9 @@
  * @package yii-gtreetable
  */
 
+Yii::import('ext.gtreetable.actions.BaseAction');
+Yii::import('ext.gtreetable.models.BaseModel');
+
 class NodeMoveAction extends BaseAction {
 
     public function run($id) {
@@ -25,7 +28,7 @@ class NodeMoveAction extends BaseAction {
         try {
             $action = $this->getMoveAction($model);
             if (!call_user_func(array($model, $action), $model->relatedNode)) {
-                throw new CException(Yii::t('gtreetable', 'Moving operation `{name}` failed!', array('{name}' => Html::encode((string) $model))));
+                throw new CDbException(Yii::t('gtreetable', 'Moving operation `{name}` failed!', array('{name}' => Html::encode((string) $model))));
             }
                           
             echo Json::encode(array(
@@ -34,22 +37,22 @@ class NodeMoveAction extends BaseAction {
                 'level' => $model->level,
                 'type' => $model->type
             ));
-        } catch (Exception $e) {
+        } catch (CException $e) {
             throw new CHttpException(500, $e->getMessage());
         }
     }
 
     protected function getMoveAction($model) {
-        if ($model->relatedNode->isRoot() && $model->position !== TreeModel::POSITION_LAST_CHILD) {
+        if ($model->relatedNode->isRoot() && $model->position !== BaseModel::POSITION_LAST_CHILD) {
             return 'moveAsRoot';
-        } else if ($model->position === TreeModel::POSITION_BEFORE) {
+        } else if ($model->position === BaseModel::POSITION_BEFORE) {
             return 'moveBefore';
-        } else if ($model->position === TreeModel::POSITION_AFTER) {
+        } else if ($model->position === BaseModel::POSITION_AFTER) {
             return 'moveAfter';
-        } else if ($model->position === TreeModel::POSITION_LAST_CHILD) {
+        } else if ($model->position === BaseModel::POSITION_LAST_CHILD) {
             return 'moveAsLast';
         } else {
-            throw new HttpException(500, Yii::t('gtreetable', 'Unsupported move position!'));
+            throw new CHttpException(500, Yii::t('gtreetable', 'Unsupported move position!'));
         }
     }
 
