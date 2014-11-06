@@ -20,11 +20,11 @@ abstract class BaseModel extends CActiveRecord
     public $related;
     public $nameAttribute = 'name';
     public $typeAttribute = 'type';
-    public $hasManyRoots;
-    public $rootAttribute;
-    public $leftAttribute;
-    public $rightAttribute;
-    public $levelAttribute;
+    public $hasManyRoots = true;
+    public $rootAttribute 'root';
+    public $leftAttribute = 'lft';
+    public $rightAttribute = 'rgt';
+    public $levelAttribute 'level';
 
     public function __toString() {
         return $this->{$this->nameAttribute};

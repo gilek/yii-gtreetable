@@ -7,10 +7,6 @@
  * @package yii-gtreetable
  */
 
-if (isset($title)) {
-    $this->pageTitle = $title;
-}
-
 if (!isset($routes)) {
     $routes = array();
 }
