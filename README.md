@@ -1,6 +1,6 @@
 # Yii-GTreeTable
 
-Yii-GTreeTable is extension of Yii 2 framework which is wrapper for [bootstrap-gtreetable](https://github.com/gilek/bootstrap-gtreetable) plugin, on the other hand provides support to server side application.
+Yii-GTreeTable is extension of Yii framework which is wrapper for [bootstrap-gtreetable](https://github.com/gilek/bootstrap-gtreetable) plugin, on the other hand provides support to server side application.
 
 Thanks to software it's possible to map actual state of nodes to data base.
 
@@ -12,6 +12,8 @@ Test available on [demo project](http://gtreetable.gilek.net).
 - PHP 5.2 or above,
 - Yii 1.1 or above,
 - Twitter Bootstrap 3.
+
+For Yii2 see [yii2-gtreetable](https://github.com/gilek/yii2-gtreetable).
 
 ## Minimal configuration<a name="minimal-configuration"></a>
 
