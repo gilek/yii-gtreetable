@@ -8,12 +8,12 @@ Test available on [demo project](http://gtreetable.gilek.net).
 
 ![](http://gilek.net/images/gtt2-demo.png)
 
+For Yii 2 see [yii2-gtreetable](https://github.com/gilek/yii2-gtreetable).
+
 ## Requirements
 - PHP 5.2 or above,
 - Yii 1.1 or above,
 - Twitter Bootstrap 3.
-
-For Yii2 see [yii2-gtreetable](https://github.com/gilek/yii2-gtreetable).
 
 ## Minimal configuration<a name="minimal-configuration"></a>
 
