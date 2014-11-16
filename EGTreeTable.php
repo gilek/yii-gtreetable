@@ -22,10 +22,12 @@ class EGTreeTable extends CWidget
      */
     public function init() {
         $this->registerClientScript();
-		if ($this->minSuffix === null) {
-			$this->minSuffix = YII_DEBUG ? '' : '.min';
-		}
-        $this->columnName = Yii::t('gtreetable', 'Name');
+		    if ($this->minSuffix === null) {
+			      $this->minSuffix = YII_DEBUG ? '' : '.min';
+		    }
+		    if ($this->columnName === null) {
+            $this->columnName = Yii::t('gtreetable', 'Name');
+		    }
     }    
     
     public function run()
