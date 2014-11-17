@@ -67,8 +67,6 @@ $defaultOptions = array(
     }")
 );
 
-
-
 $options = !isset($options) ? $defaultOptions : array_merge($defaultOptions, $options);
     
 $widget = $this->createWidget('ext.gtreetable.EGTreeTable',array(

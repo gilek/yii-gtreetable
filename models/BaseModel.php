@@ -9,12 +9,13 @@
 
 abstract class BaseModel extends CActiveRecord
 {
+
     const POSITION_BEFORE = 'before';
     const POSITION_AFTER = 'after';
     const POSITION_FIRST_CHILD = 'firstChild';
     const POSITION_LAST_CHILD = 'lastChild';
     const TYPE_DEFAULT = 'default';
-    
+
     public $parent;
     public $position;
     public $related;
@@ -26,11 +27,73 @@ abstract class BaseModel extends CActiveRecord
     public $rightAttribute = 'rgt';
     public $levelAttribute = 'level';
 
-    public function __toString() {
+    public function getName()
+    {
         return $this->{$this->nameAttribute};
     }
 
-    public function rules() {
+    public function getType()
+    {
+        return $this->{$this->typeAttribute};
+    }
+
+    public function getRoot()
+    {
+        return $this->{$this->rootAttribute};
+    }    
+    
+    public function getLeft()
+    {
+        return $this->{$this->leftAttribute};
+    }
+
+    public function getRight()
+    {
+        return $this->{$this->rightAttribute};
+    }
+
+    public function getLevel()
+    {
+        return $this->{$this->levelAttribute};
+    }
+
+    public function setName($name)
+    {
+        $this->{$this->nameAttribute} = $name;
+    }
+
+    public function setType($type)
+    {
+        $this->{$this->typeAttribute} = $type;
+    }
+
+    public function setRoot($root)
+    {
+        $this->{$this->rootAttribute} = $root;
+    }    
+    
+    public function setLeft($left)
+    {
+        $this->{$this->leftAttribute} = $left;
+    }
+
+    public function setRight($right)
+    {
+        $this->{$this->rightAttribute} = $right;
+    }
+
+    public function setLevel($level)
+    {
+        $this->{$this->levelAttribute} = $level;
+    }
+
+    public function __toString()
+    {
+        return $this->{$this->nameAttribute};
+    }
+
+    public function rules()
+    {
         return array(
             array('parent', 'required', 'on' => 'create'),
             array('related', 'required', 'on' => 'create, move'),
@@ -40,15 +103,17 @@ abstract class BaseModel extends CActiveRecord
             array($this->nameAttribute, 'length', 'max' => 128, 'on' => 'create, update'),
             array($this->nameAttribute, 'filter', 'filter' => array('CHtml', 'encode'), 'skipOnError' => true, 'on' => 'create, update'),
         );
-    }    
-    
-    public function relations() {
+    }
+
+    public function relations()
+    {
         return array(
-            'relatedNode' => array(self::BELONGS_TO, get_class($this) , 'related'),
+            'relatedNode' => array(self::BELONGS_TO, get_class($this), 'related'),
         );
-    }    
-    
-    public function beforeSave() {
+    }
+
+    public function beforeSave()
+    {
         parent::beforeSave();
 
         if ($this->isNewRecord) {
@@ -56,13 +121,14 @@ abstract class BaseModel extends CActiveRecord
         }
         return true;
     }
-    
-    public function behaviors() {
+
+    public function behaviors()
+    {
 
         $nestedSet = array(
-            'class'=>'ext.gtreetable.behaviors.nestedset.NestedSetBehavior',
+            'class' => 'ext.gtreetable.behaviors.nestedset.NestedSetBehavior',
         );
-        
+
         foreach (['rootAttribute', 'leftAttribute', 'rightAttribute', 'levelAttribute', 'hasManyRoots'] as $attribute) {
             if ($this->{$attribute} !== null) {
                 $nestedSet[$attribute] = $this->{$attribute};
@@ -72,29 +138,32 @@ abstract class BaseModel extends CActiveRecord
         return array(
             'nestedSetBehavior' => $nestedSet
         );
-    }    
-    
-    public function getPositions() {
+    }
+
+    public function getPositions()
+    {
         return array(
             self::POSITION_BEFORE,
             self::POSITION_AFTER,
             self::POSITION_FIRST_CHILD,
             self::POSITION_LAST_CHILD
         );
-    }   
-    
+    }
+
     /**
      * 
      * @param string $glue
      * @return string
      */
-    public function getPath($glue = ' » ') {
+    public function getPath($glue = ' » ')
+    {
         $path = array();
-        foreach($this->ancestors()->findAll() as $dc) {
-            $path[] = (string)$dc;      
+        foreach ($this->ancestors()->findAll() as $dc) {
+            $path[] = (string) $dc;
         }
-        $path[] = (string)$this;
+        $path[] = (string) $this;
         krsort($path);
         return implode($glue, $path);
-    }    
+    }
+
 }

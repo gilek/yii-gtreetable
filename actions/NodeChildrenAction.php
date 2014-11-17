@@ -26,10 +26,10 @@ class NodeChildrenAction extends BaseAction
         $result = array();
         foreach ($nodes as $node) {
             $result[] = array(
-                'id' => $node->id,
-                'name' => $node->name,
-                'level' => $node->level,
-                'type' => $node->type
+                'id' => $node->getPrimaryKey(),
+                'name' => $node->getName(),
+                'level' => $node->getLevel(),
+                'type' => $node->getType()
             );
         }
         echo CJSON::encode($result);

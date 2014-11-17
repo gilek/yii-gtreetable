@@ -30,9 +30,9 @@ class NodeCreateAction extends BaseAction {
             
             echo CJSON::encode(array(
                 'id' => $model->getPrimaryKey(),
-                'name' => $model->name,
-                'level' => $model->level,
-                'type' => $model->type
+                'name' => $model->getName(),
+                'level' => $model->getLevel(),
+                'type' => $model->getType()
             ));
         } catch (CException $e) {
             throw new CHttpException(500, $e->getMessage());
