@@ -1,11 +1,10 @@
 <?php
 
-/*
- * @author Maciej "Gilek" Kłak
- * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
- * @version 2.0.0-alpha
- * @package yii-gtreetable
- */
+/**
+* @link https://github.com/gilek/yii-gtreetable
+* @copyright Copyright (c) 2015 Maciej Kłak
+* @license https://github.com/gilek/yii-gtreetable/blob/master/LICENSE
+*/
 
 return array(
     'Position indicated by parent ID is not exists!' => 'Pozycja wskazywana przez identyfikator ojca nie istnieje!',

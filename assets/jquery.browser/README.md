@@ -10,7 +10,7 @@ Include script *after* the jQuery library:
 
 ## Usage
 
-Returns true if the current useragent is some version of Microsoft's Internet Explorer. Supports all IE versions including IE11
+Returns true if the current useragent is some version of Microsoft's Internet Explorer. Supports all IE versions including IE 12.
 
     $.browser.msie;
 
@@ -28,17 +28,27 @@ Reading the browser verion
 
 ## Things not included in the original jQuery $.browser implementation
 
-- Detect Windows, Mac, Linux, iPad, iPhone, Android, Chrome OS, and Windows Phone useragents, in addition to desktop and mobile browsers
+- Detect specifically Windows, Mac, Linux, iPad, iPhone, iPod, Android, Kindle, BlackBerry, Chrome OS, and Windows Phone useragents
 
 ```javascript
+	$.browser.android
+	$.browser.blackberry
+	$.browser.cros
 	$.browser.ipad
 	$.browser.iphone
-	$.browser["windows phone"]
-	$.browser.android
-	$.browser.cros
-	$.browser.win
-	$.browser.mac
+	$.browser.ipod
+	$.browser.kindle
 	$.browser.linux
+	$.browser.mac
+	$.browser.playbook
+	$.browser.silk
+	$.browser.win
+	$.browser["windows phone"]
+```
+
+Alternatively, you can detect for generic classifications such as desktop or mobile
+
+```javascript
 	$.browser.desktop
 	$.browser.mobile
 ```
@@ -66,7 +76,7 @@ Reading the browser verion
 	$.browser.versionNumber // Returns 32 as a number
 ```
 
-- Support for new useragent on IE11
+- Support for new useragent on IE 11 and IE 12
 - Support for WebKit based Opera browsers
 - Added testing using PhantomJS and different browser user agents
 
@@ -94,6 +104,3 @@ Once Casperjs and the grunt-cli npm package is installed you can execute all the
 
 - [Examples and original implementation](http://api.jquery.com/jQuery.browser/)
 - [Original Gist used for the plugin](https://gist.github.com/adeelejaz/4714079)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gabceb/jquery-browser-plugin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

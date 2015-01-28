@@ -1,11 +1,10 @@
 <?php
 
-/*
- * @author Maciej "Gilek" Kłak
- * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
- * @version 2.0.0-alpha
- * @package yii-gtreetable
- */
+/**
+* @link https://github.com/gilek/yii-gtreetable
+* @copyright Copyright (c) 2015 Maciej Kłak
+* @license https://github.com/gilek/yii-gtreetable/blob/master/LICENSE
+*/
 
 Yii::import('ext.gtreetable.actions.BaseAction');
 
@@ -32,7 +31,7 @@ class NodeChildrenAction extends BaseAction
                 'type' => $node->getType()
             );
         }
-        echo CJSON::encode($result);
+        echo CJSON::encode(array('nodes'=>$result));
     }
 }
 

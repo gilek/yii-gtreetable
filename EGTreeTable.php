@@ -1,11 +1,10 @@
 <?php
 
-/*
- * @author Maciej "Gilek" Kłak
- * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
- * @version 2.0.0-alpha
- * @package yii-gtreetable
- */
+/**
+* @link https://github.com/gilek/yii-gtreetable
+* @copyright Copyright (c) 2015 Maciej Kłak
+* @license https://github.com/gilek/yii-gtreetable/blob/master/LICENSE
+*/
 
 class EGTreeTable extends CWidget
 {
@@ -53,8 +52,9 @@ class EGTreeTable extends CWidget
 
     public function registerClientScript()
     {
+        $assetsDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
         if ($this->baseScriptUrl === null) {
-            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets');
+            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish($assetsDir);
         }
 
         $cs = Yii::app()->getClientScript();
@@ -63,8 +63,11 @@ class EGTreeTable extends CWidget
         $cs->registerScriptFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/bootstrap-gtreetable' . $this->minSuffix . '.js');
         $cs->registerCssFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/bootstrap-gtreetable' . $this->minSuffix . '.css');
 
-        if (array_key_exists('language', $this->options) && strlen($this->options['language']) > 0) {
-            $cs->registerScriptFile($this->baseScriptUrl . '/bootstrap-gtreetable/dist/languages/bootstrap-gtreetable.' . $this->options['language'] . $this->minSuffix . '.js');
+        if (array_key_exists('language', $this->options) && strlen($this->options['language']) > 0 && $this->options['language'] !== 'en-US') {
+            $langFile =  '/bootstrap-gtreetable/dist/languages/bootstrap-gtreetable.' . $this->options['language'] . $this->minSuffix . '.js';            
+            if (file_exists($assetsDir . DIRECTORY_SEPARATOR .$langFile)) {
+                $cs->registerScriptFile($this->baseScriptUrl . $langFile);
+            }
         }
 
         if (array_key_exists('draggable', $this->options) && $this->options['draggable'] === true) {

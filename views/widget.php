@@ -1,11 +1,12 @@
 <?php
 
-/*
- * @author Maciej "Gilek" Kłak
- * @copyright Copyright &copy; 2014 Maciej "Gilek" Kłak
- * @version 2.0.0-alpha
- * @package yii-gtreetable
- */
+/**
+* @link https://github.com/gilek/yii-gtreetable
+* @copyright Copyright (c) 2015 Maciej Kłak
+* @license https://github.com/gilek/yii-gtreetable/blob/master/LICENSE
+*/
+
+Yii::import('ext.gtreetable.helpers.LocaleHelper');
 
 if (!isset($routes)) {
     $routes = array();
@@ -22,11 +23,19 @@ $routes = array_merge(array(
 ),$routes);
 
 $defaultOptions = array(
-    'source' => new CJavaScriptExpression("function (id) {  
-        return URI('".$this->createUrl($routes['nodeChildren'])."').addSearch({'id':id});
+    'source' => new CJavaScriptExpression("function (id) {
+        return {
+            type: 'GET',
+            url: '".$this->createUrl($routes['nodeChildren'])."',
+            data: { 'id': id },        
+            dataType: 'json',
+            error: function(XMLHttpRequest) {
+                alert(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+            }
+        };
     }"),
     'onSave' => new CJavaScriptExpression("function (oNode) {
-        return jQuery.ajax({
+        return {
             type: 'POST',
             url: !oNode.isSaved() ? '".$this->createUrl($routes['nodeCreate'])."' : URI('".$this->createUrl($routes['nodeUpdate'])."').addSearch({'id':oNode.getId()}),
             data: {
@@ -39,20 +48,20 @@ $defaultOptions = array(
             error: function(XMLHttpRequest) {
                 alert(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
             }
-        });        
+        };        
     }"),
     'onDelete' => new CJavaScriptExpression("function(oNode) {
-        return jQuery.ajax({
+        return {
             type: 'POST',
             url: URI('".$this->createUrl($routes['nodeDelete'])."').addSearch({'id':oNode.getId()}),
             dataType: 'json',
             error: function(XMLHttpRequest) {
                 alert(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
             }
-        });        
+        };        
     }"),
     'onMove' => new CJavaScriptExpression("function(oSource, oDestination, position) {
-        return jQuery.ajax({
+        return {
             type: 'POST',
             url: URI('".$this->createUrl($routes['nodeMove'])."').addSearch({'id':oSource.getId()}),
             data: {
@@ -63,8 +72,10 @@ $defaultOptions = array(
             error: function(XMLHttpRequest) {
                 alert(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
             }
-        });        
-    }")
+        };        
+    }"),
+    'language' => LocaleHelper::normalize(Yii::app()->language),
+    'rootLevel' => 1
 );
 
 $options = !isset($options) ? $defaultOptions : array_merge($defaultOptions, $options);
